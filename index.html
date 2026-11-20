@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a20" />
+  <title>Silent Night — A Christmas Eve Escape</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Silent Night home"><span class="brand-mark">✳</span><span>SILENT<span class="brand-light"> NIGHT</span></span></a>
+      <div class="chapter-label"><span class="live-dot"></span> CHRISTMAS EVE · 11:47 PM</div>
+      <button class="sound-toggle" id="soundBtn" aria-label="Toggle sound" title="Toggle sound">♫ <span>Sound on</span></button>
+    </header>
+
+    <section class="intro-row">
+      <div>
+        <p class="eyebrow">A HOLIDAY STEALTH ADVENTURE</p>
+        <h1>The night took<br class="mobile-break"> a <em>wrong turn.</em></h1>
+        <p class="subtitle">One last gingerbread stop. One locked cabin. One very quiet way home.</p>
+      </div>
+      <div class="story-chip"><span class="chip-icon">❄</span><span><b>THE STORY</b><br>You came for a Christmas treat.<br>Now find a way out unseen.</span></div>
+    </section>
+
+    <section class="game-layout" aria-label="Game">
+      <div class="game-frame">
+        <div class="game-topline">
+          <div class="location"><span class="location-icon">⌂</span><span id="roomName">THE CABIN</span></div>
+          <div class="alert-status"><span class="status-dot" id="statusDot"></span><span id="statusText">QUIET</span></div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="game" aria-label="Top-down stealth game map"></canvas>
+          <div class="game-overlay" id="overlay">
+            <div class="overlay-card" id="overlayCard">
+              <div class="overlay-snow">✳　❄　✳</div>
+              <p class="eyebrow" id="overlayKicker">CHRISTMAS EVE · 11:47 PM</p>
+              <h2 id="overlayTitle">A little<br>holiday detour.</h2>
+              <p id="overlayCopy">You followed the smell of warm gingerbread. The door clicked shut behind you. Find the key, cut the chain, and get out before he comes back.</p>
+              <button class="primary-btn" id="startBtn">START SNEAKING <span>→</span></button>
+              <div class="overlay-hint">HEADPHONES OPTIONAL · COURAGE REQUIRED</div>
+            </div>
+          </div>
+          <div class="toast" id="toast" aria-live="polite"></div>
+          <div class="keypad" id="keypad" hidden>
+            <p class="eyebrow">THE FRONT DOOR</p><h3>Enter the shed code</h3>
+            <div class="code-display" id="codeDisplay">_ _ _ _</div>
+            <p class="keypad-hint">Find the note for the code · Enter to confirm · Esc to close</p>
+            <div class="keypad-grid" aria-label="Keypad">
+              <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
+              <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
+              <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
+              <button type="button" data-key-action="clear">CLR</button><button type="button" data-digit="0">0</button><button type="button" data-key-action="backspace" aria-label="Delete last digit">⌫</button>
+            </div>
+            <button id="codeConfirm" class="primary-btn small-btn">UNLOCK DOOR <span>→</span></button>
+          </div>
+        </div>
+        <div class="game-footline">
+          <div class="stealth-meter"><span class="meter-label">SPOTTED</span><div class="meter-track"><div class="meter-fill" id="meterFill"></div></div><span class="meter-state" id="meterState">CLEAR</span></div>
+          <div class="foot-note"><span class="foot-dot"></span> <span id="footMessage">Stay out of the light.</span></div>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="panel-block mission-block">
+          <div class="panel-heading"><span>YOUR WAY OUT</span><span class="step-count" id="stepCount">0 / 3</span></div>
+          <p class="panel-description">The front door is chained and coded. Find what you need, then make it to the exit.</p>
+          <ul class="objectives" id="objectives">
+            <li data-objective="key"><span class="check-box"><span>✓</span></span><span class="objective-copy"><b>Cabin key</b><small>Somewhere in the study</small></span><span class="objective-icon">⚿</span></li>
+            <li data-objective="cutters"><span class="check-box"><span>✓</span></span><span class="objective-copy"><b>Bolt cutters</b><small>Look around the kitchen</small></span><span class="objective-icon">✂</span></li>
+            <li data-objective="note"><span class="check-box"><span>✓</span></span><span class="objective-copy"><b>Shed code</b><small>A note in the bedroom</small></span><span class="objective-icon">▤</span></li>
+          </ul>
+          <div class="code-clue" id="codeClue" hidden><span>THE SHED CODE</span><b id="clueValue">— — — —</b></div>
+        </div>
+        <div class="panel-block threat-block">
+          <div class="panel-heading"><span>THE KIDNAPPER</span><span class="threat-pulse">● NEARBY</span></div>
+          <p>He patrols the cabin. If he sees you, keep moving—or duck into a hiding spot.</p>
+          <div class="threat-tip"><span class="tip-icon">◉</span><span>His flashlight reveals the area in front of him. Walls block his view.</span></div>
+        </div>
+        <div class="controls-block">
+          <div class="panel-heading"><span>HOW TO PLAY</span></div>
+          <div class="control-row"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span><span class="control-copy">or <b>arrow keys</b> to move</span></div>
+          <div class="control-row"><span class="keycap wide">E</span><span class="control-copy">hide in closets · use the door</span></div>
+          <div class="control-row"><span class="keycap wide">SHIFT</span><span class="control-copy">sprint (but he may hear you)</span></div>
+        </div>
+        <div class="side-footer"><span>✳</span> Keep your head. Keep your footsteps quiet.</div>
+      </aside>
+    </section>
+
+    <nav class="touch-controls" aria-label="Touch movement controls">
+      <button class="touch-action" id="interactBtn" aria-label="Interact">E <small>HIDE</small></button>
+      <div class="dpad">
+        <button data-dir="up" aria-label="Move up">▲</button>
+        <button data-dir="left" aria-label="Move left">◀</button>
+        <button data-dir="down" aria-label="Move down">▼</button>
+        <button data-dir="right" aria-label="Move right">▶</button>
+      </div>
+      <button class="touch-action sprint-touch" id="sprintBtn" aria-label="Sprint">» <small>SPRINT</small></button>
+    </nav>
+    <footer class="page-footer"><span>MADE FOR A VERY LONG CHRISTMAS EVE</span><span>✳ &nbsp; SILENT NIGHT &nbsp; ✳</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
